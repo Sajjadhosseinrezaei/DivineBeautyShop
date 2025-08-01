@@ -1,5 +1,5 @@
 {% extends "index.html" %}
-
+{% load static %}
 {% block content %}
 
     <!----------------------------------- Home / text-gray-600 ?! -------------------------------->
@@ -58,7 +58,7 @@
                 <!-- face img-->
                 <div
                     class="main__img_1 sm:col-span-2 sm:row-span-2 col-span-4 row-span-2 flex items-center justify-center flex-col px-8 sm:p-0">
-                    <img src="./img/face-home/face_home_2.jpg" alt="face-image"
+                    <img src={% static 'img/face_home_2.jpg' %} alt="face-image"
                         class="w-full h-full object-cover object-top">
                     <div class="text-gray-600 font-Zain text-sm lg:text-base text-center p-2 " dir="rtl">
                         ! زیبایی، جلوه‌ای از اعتماد به نفس است؛ بدرخش همانطور که هستی
@@ -68,7 +68,7 @@
                 <!-- makeup img-->
                 <div
                     class="main__img_2 sm:col-span-2 sm:row-span-1 sm:flex flex-col items-center justify-center hidden">
-                    <img src="./img/face-home/skin_home-1.jpg" alt="makeup-image" class="w-full h-full object-cover">
+                    <img src="{% static 'img/skin_home-1.jpg' %}" alt="makeup-image" class="w-full h-full object-cover">
                     <div class="text-gray-600 font-Zain text-sm lg:text-base text-center p-2" dir="rtl">
                         !حس دوباره جوانی با انتخابی شایسته
                     </div>
@@ -78,7 +78,7 @@
                 <!-- skin img-->
                 <div
                     class="main__img_2 sm:col-span-2 sm:row-span-1 sm:flex flex-col items-center justify-center translate-y-10 hidden">
-                    <img src="./img/face-home/skin_home.jpg" alt="skin-image" class="w-full h-full object-cover">
+                    <img src="{% static 'img/skin_home.jpg' %}" alt="skin-image" class="w-full h-full object-cover">
                     <div class="text-gray-600 font-Zain text-sm lg:text-base text-center p-2" dir="rtl">
                         پوستی شاداب، راز درخشش طبیعی.
                     </div>

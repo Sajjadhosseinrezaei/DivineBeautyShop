@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'img/divine-logo.png' %}" type="image/x-icon">
+    <!-- css -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.min.css">
+    <!-- swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- reCAPTCHA v2 -->
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <title>ثبت‌نام Divine Beauty</title>
+</head>
+<body>
+    <div class="relative container text-white flex items-center justify-center min-h-screen font-Zain">
+        <!-- blob 1 -->
+        <div class="w-64 h-64 bg-rose-700 rounded-full blur-3xl -z-10 
+            opacity-30 absolute left-20 top-14 transform -translate-x-1/2 -translate-y-1/2">
+        </div>
+        <!-- blob 2 -->
+        <div class="w-64 h-64 bg-rose-700 rounded-full blur-3xl -z-10 
+            opacity-40 absolute bottom-0 right-0">
+        </div>
+
+        <div class="bg-gray-100 p-8 rounded-lg shadow-lg w-96">
+            <h1 class="text-yellow-500">
+                <span class="text-xl pb-4">سلام!</span>
+                <div class="text-[14px]">فرم ثبت‌نام را پر کنید.</div>
+            </h1>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="text-{% if message.tags == 'error' %}red{% else %}green{% endif %}-600 bg-{% if message.tags == 'error' %}red{% else %}green{% endif %}-100 p-2 rounded-lg mb-4">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form action="{% url 'accounts:register' %}" method="POST" class="mt-4 space-y-4">
+                {% csrf_token %}
+                <div>
+                    <label class="text-gray-400 block">نام</label>
+                    <input type="text" name="first_name" class="w-full p-2 border border-gray-300 rounded-lg shadow-lg text-gray-400"
+                        value="{{ first_name }}" required>
+                </div>
+                <div>
+                    <label class="text-gray-400 block">نام خانوادگی</label>
+                    <input type="text" name="last_name" class="w-full p-2 border border-gray-300 rounded-lg shadow-lg text-gray-400"
+                        value="{{ last_name }}" required>
+                </div>
+                <div>
+                    <label class="text-gray-400 block">ایمیل</label>
+                    <input type="email" name="email" class="w-full p-2 border border-gray-300 rounded-lg shadow-lg text-gray-400"
+                        value="{{ email }}" required>
+                </div>
+                <div>
+                    <label class="text-gray-400 block">رمز عبور</label>
+                    <input type="password" name="password1" class="w-full p-2 border border-gray-300 rounded-lg shadow-lg text-gray-400"
+                        required>
+                </div>
+                <div>
+                    <label class="text-gray-400 block">تأیید رمز عبور</label>
+                    <input type="password" name="password2" class="w-full p-2 border border-gray-300 rounded-lg shadow-lg text-gray-400"
+                        required>
+                </div>
+                <input type="text" name="honeypot" style="display:none;">
+                <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_PUBLIC_KEY }}"></div>
+                <button
+                    class="text-yellow-500 border-gray-400 border-2 bg-transparent mt-3 p-2 rounded-3xl w-full text-md hover:bg-gray-400 hover:text-white hover:border-transparent transition-all duration-300">
+                    ثبت‌نام
+                </button>
+            </form>
+
+            <div>
+                <p class="text-gray-400 text-sm mt-4">
+                    قبلاً ثبت‌نام کرده‌اید؟
+                    <a href="" class="text-gray-400 border-b-2 border-gray-400 hover:text-yellow-500">وارد شوید</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- main js -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

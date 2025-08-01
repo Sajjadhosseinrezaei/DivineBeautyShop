@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # third party app
+    'django_recaptcha',
+
     # local apps 
     'accounts.apps.AccountsConfig',
     'home.apps.HomeConfig',
@@ -79,11 +82,14 @@ WSGI_APPLICATION = 'A.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dbshop',           # نام پایگاه داده
+        'USER': 'postgres',             # نام کاربری PostgreSQL
+        'PASSWORD': 'postgres',     # رمز عبور کاربر
+        'HOST': 'localhost',          # هاست (معمولاً localhost برای توسعه محلی)
+        'PORT': '5432',               # پورت پیش‌فرض PostgreSQL
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -128,3 +134,31 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+RECAPTCHA_PUBLIC_KEY = '6LfMTpcrAAAAAKSB8zoRZUfvK2umK2l67_NAytaB'
+RECAPTCHA_PRIVATE_KEY = '6LfMTpcrAAAAAErWvnB0HXifZsPApxMTAA3_ApHh'
+
+
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+    },
+}

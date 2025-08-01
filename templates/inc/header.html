@@ -70,18 +70,20 @@
                 <nav class="bg-white/90 absolute w-full h-16 left-0 -bottom-[86px] shadow-md hover:shadow-lg rounded-[10px] hidden lg:flex lg:items-center lg:justify-between lg:px-14 transition-all duration-300 delay-75"
                     dir="rtl">
                     <!-- list -->
-                    <ul class="text-gray-400 flex  gap-x-4">
-                        <li><a href="#"
-                                class="border-l  pl-4 transition-all duration-300 hover:text-rose-200">فروشگاه</a></li>
-                        <li><a href="#"
-                                class="border-l  pl-4 transition-all duration-300 hover:text-rose-200">محصولات</a></li>
-                        <li><a href="#"
-                                class="border-l  pl-4 transition-all duration-300 hover:text-rose-200">سبدخرید</a></li>
-                        <li><a href="./login/enter.html"
-                                class="border-l  pl-4 transition-all duration-300 hover:text-rose-200">ورود</a>
+                   <ul class="text-gray-400 flex gap-x-4">
+                        <li><a href="#" class="border-l pl-4 transition-all duration-300 hover:text-rose-200">فروشگاه</a></li>
+                        <li><a href="#" class="border-l pl-4 transition-all duration-300 hover:text-rose-200">محصولات</a></li>
+                        <li><a href="#" class="border-l pl-4 transition-all duration-300 hover:text-rose-200">سبدخرید</a></li>
+                {% if user.is_authenticated %}  
+                        <li class="border-l pl-4 transition-all duration-300 hover:text-rose-200">
+                            <form action="{% url 'accounts:logout' %}" method="POST" class="inline">
+                                {% csrf_token %}
+                                <button type="submit">خروج</button>
+                            </form>
                         </li>
-                        <li><a href="#" class="transition-all duration-300 hover:text-rose-200">خروج</a>
-                        </li>
+                {% else %}
+                        <li><a href="{% url 'accounts:login' %}" class="border-l pl-4 transition-all duration-300 hover:text-rose-200">ورود</a></li>
+                {% endif %}
                     </ul>
 
                     <!-- form -->

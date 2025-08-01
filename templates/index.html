@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'img/divine-logo.png' %}" type="image/x-icon">
+    <!-- css -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.min.css">
+    <!-- swiper-->
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+
+    <!-- title -->
+    <title>Divine Beauty</title>
+</head>
+<body>
+    {% include "inc/header.html" %}
+
+    {% block content %}{% endblock content %}
+
+    {% include "inc/footer.html" %}
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+        <script src="js/swiper-bundle.min.js"></script>
+
+    <!-- main js-->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

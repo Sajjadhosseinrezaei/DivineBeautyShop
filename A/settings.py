@@ -141,7 +141,11 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 RECAPTCHA_PUBLIC_KEY = '6LfMTpcrAAAAAKSB8zoRZUfvK2umK2l67_NAytaB'
 RECAPTCHA_PRIVATE_KEY = '6LfMTpcrAAAAAErWvnB0HXifZsPApxMTAA3_ApHh'
 
+# settings.py
 
+# تنظیمات مربوط به مدیا
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 LOGGING = {

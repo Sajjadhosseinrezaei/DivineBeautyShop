@@ -1,0 +1,78 @@
+{% extends "index.html" %}
+
+{% block content %}
+<section class="text-gray-400">
+    <!--blob 2-->
+    <div class="w-64 h-64 bg-rose-500 rounded-full blur-3xl -z-10 opacity-40 absolute bottom-0 left-0"></div>
+
+    <div class="about__leaf absolute top-28 -right-12 opacity-50">
+        <img src="" alt="leaf-image" class="w-40 md:w-48 xl:w-52">
+    </div>
+
+    <div class="container flex flex-col items-center gap-y-12">
+        <!-- motto -->
+        <div>
+            <p class="hero__text font-Winky text-2xl">Every one need MAKE UP</p>
+        </div>
+
+        <!-- products -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 text-center md:text-start mb-28">
+            {% for product in products %}
+            <div class="menu__card flex flex-col gap-5 bg-white border-rose-200 border-2 rounded-md p-6 hover:cursor-pointer">
+                <div class="flex flex-col items-center gap-2">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-60 h-60 rounded-sm object-cover">
+                    {% else %}
+                    <img src="" alt="placeholder" class="w-60 h-60 rounded-sm object-cover">
+                    {% endif %}
+                    <div class="ml-2 flex flex-col items-center">
+                        <p class="text-yellow-500 uppercase">{{ product.name }}</p>
+                        <p class="flex flex-row gap-1">
+                            <span>{{ product.price }}</span>
+                            <span>تومان</span>
+                        </p>
+                    </div>
+                    <button class="bg-white text-lg rounded-sm px-2 py-1 border-b-2 shadow-sm btn-shop ml-auto">
+                        <a href=""><i class="ri-shopping-cart-fill"></i></a>
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-500 col-span-full text-center">هیچ محصولی یافت نشد.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="flex justify-center mb-14 space-x-2 text-gray-400 rtl:space-x-2" dir="ltr">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"
+           class="px-3 py-1 rounded border text-yellow-500 border-gray-400 hover:text-white hover:bg-gray-400 duration-300 delay-100 transition-all">قبلی</a>
+        {% else %}
+        <button class="px-3 py-1 rounded border text-gray-500 border-gray-400 cursor-not-allowed" disabled>قبلی</button>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+        <button class="px-3 py-1 rounded border text-white bg-gray-400 border-gray-400">{{ num }}</button>
+        {% else %}
+        <a href="?page={{ num }}"
+           class="px-3 py-1 rounded border text-yellow-500 border-gray-400 hover:text-white hover:bg-gray-400 duration-300 delay-100 transition-all">{{ num }}</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"
+           class="px-3 py-1 rounded border text-yellow-500 border-gray-400 hover:text-white hover:bg-gray-400 duration-300 delay-100 transition-all">بعدی</a>
+        {% else %}
+        <button class="px-3 py-1 rounded border text-gray-500 border-gray-400 cursor-not-allowed" disabled>بعدی</button>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="about__leaf absolute -bottom-44 -left-20 opacity-50">
+        <img src="" alt="leaf-image" class="w-40 md:w-48 xl:w-52">
+    </div>
+</section>
+{% endblock content %}

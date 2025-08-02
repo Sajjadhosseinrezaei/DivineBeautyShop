@@ -47,14 +47,21 @@
                             </a>
                         </div>
                         <!-- list -->
-                        <ul class="text-gray-400 flex flex-col items-center gap-y-5">
-                            <li><a href="#" class="transition-all duration-300 hover:text-rose-200">فروشگاه</a></li>
-                            <li><a href="#" class="transition-all duration-300 hover:text-rose-200">محصولات</a></li>
-                            <li><a href="#" class="transition-all duration-300 hover:text-rose-200">سبدخرید</a></li>
-                            <li><a href="./login/enter.html"
-                                    class="transition-all duration-300 hover:text-rose-200">ورود</a></li>
-                            <li><a href="#" class="transition-all duration-300 hover:text-rose-200">خروج</a></li>
-                        </ul>
+                            <ul class="text-gray-400 flex flex-col items-center gap-y-5">
+                                <li><a href="#" class="transition-all duration-300 hover:text-rose-200">فروشگاه</a></li>
+                                <li><a href="#" class="transition-all duration-300 hover:text-rose-200">محصولات</a></li>
+                                <li><a href="#" class="transition-all duration-300 hover:text-rose-200">سبدخرید</a></li>
+                                {% if user.is_authenticated %}
+                                    <li>
+                                        <form method="post" action="{% url 'accounts:logout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="transition-all duration-300 hover:text-rose-200">خروج</button>
+                                        </form>
+                                    </li>
+                                {% else %}
+                                    <li><a href="{% url 'accounts:login' %}" class="transition-all duration-300 hover:text-rose-200">ورود</a></li>
+                                {% endif %}
+                            </ul>
                         <!-- form -->
                         <form class="relative flex gap-x-3" dir="rtl">
                             <label for="snav-search-input">

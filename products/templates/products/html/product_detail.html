@@ -1,0 +1,112 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+<div class="text-gray-400 bg-white" dir="rtl">
+    <!-- navbar and header -->
+    <div class="flex flex-row relative py-8 px-12 sm:px-14 border-b-2 border-b-rose-200">
+        <p class="w-full font-Zain text-2xl sm:text-3xl text-yellow-500 text-right">سبد خرید</p>
+        <div class="z-50 text-2xl sm:text-3xl text-left">
+            <a href="">
+                <i class="ri-shopping-cart-line text-yellow-500 duration-300 cursor-pointer"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- text -->
+    <div class="container mx-auto px-4 py-10">
+        <div class="flex flex-col lg:flex-row gap-10">
+            <!-- img -->
+            <div class="w-full lg:w-1/2 flex justify-center items-center">
+                <div class="aspect-square w-2/3 sm:w-1/2 lg:w-full max-w-md bg-gray-100 rounded-md overflow-hidden shadow-md">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                         class="w-full h-full object-cover hover:shadow-xl hover:-translate-y-0.5 duration-300 cursor-pointer" />
+                    {% else %}
+                    <img src="" alt="placeholder"
+                         class="w-full h-full object-cover hover:shadow-xl hover:-translate-y-0.5 duration-300 cursor-pointer" />
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- detail of product -->
+            <div class="w-full lg:w-1/2 flex flex-col justify-between space-y-6">
+                <div>
+                    <h1 class="text-4xl font-Winky text-yellow-500 mb-4">{{ product.name }}</h1>
+
+                    <div class="text-yellow-500 text-xs py-2">
+                        <a href="#" class="text-yellow-500 px-2 font-Jost">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-half-fill"></i>
+                            <i class="ri-star-line text-gray-400"></i>
+                            <i class="ri-star-line text-gray-400"></i>
+                            (32 ستاره)
+                        </a>
+                    </div>
+
+                    <p class="text-2xl font-semibold text-gray-400 mb-4">{{ product.price }} تومان</p>
+
+                    <div class="p-6 border-2 border-rose-200 rounded-md">
+                        <p class="text-lg leading-relaxed mb-6">
+                            {{ product.description|default:"بدون توضیحات" }}
+                        </p>
+
+                        <div class="flex flex-row gap-4 mb-4">
+                            <form method="post" action="">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" id="quantity" value="1">
+                                <button type="submit" class="btn-shop1 btn-sm">سبدخرید</button>
+                            </form>
+                        </div>
+
+                        <!-- موجودی -->
+                        <button class="text-yellow-500 bg-gray-100 px-3 py-1 rounded-full text-sm">
+                            موجودی :
+                            <span>{{ product.stock }}</span>
+                        </button>
+
+                        <div class="flex items-center justify-between w-full pt-2">
+                            <div class="flex items-center gap-2">
+                                <button class="px-3 py-1 rounded-md shadow-md bg-gray-100 text-xs opacity-50"
+                                        onclick="decrement()">-</button>
+                                <span id="counter" class="text-md font-Jost">1</span>
+                                <button class="px-3 py-1 rounded-md shadow-md bg-gray-100 text-xs opacity-90"
+                                        onclick="increment()">+</button>
+                            </div>
+                            <span id="price" class="text-md font-semibold">{{ product.price }} تومان</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="copy__right container">
+    <p class="text-center mt-10 opacity-50 text-gray-400">Copyright &copy; 2025. marziehfeyz7.</p>
+</div>
+
+<script>
+    let count = 1;
+    let pricePerItem = {{ product.price }};
+    function updatePrice() {
+        document.getElementById("price").innerText =
+            (count * pricePerItem).toLocaleString() + " تومان";
+        document.getElementById("counter").innerText = count;
+        document.getElementById("quantity").value = count;
+    }
+    function increment() {
+        if (count < {{ product.stock }}) {
+            count++;
+            updatePrice();
+        }
+    }
+    function decrement() {
+        if (count > 1) {
+            count--;
+            updatePrice();
+        }
+    }
+</script>
+{% endblock content %}

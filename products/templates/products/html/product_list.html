@@ -21,12 +21,12 @@
             <div class="menu__card flex flex-col gap-5 bg-white border-rose-200 border-2 rounded-md p-6 hover:cursor-pointer">
                 <div class="flex flex-col items-center gap-2">
                     {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-60 h-60 rounded-sm object-cover">
+                    <a href="{% url "products:product_detail" product.slug %}"><img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-60 h-60 rounded-sm object-cover"></a>
                     {% else %}
                     <img src="" alt="placeholder" class="w-60 h-60 rounded-sm object-cover">
                     {% endif %}
                     <div class="ml-2 flex flex-col items-center">
-                        <p class="text-yellow-500 uppercase">{{ product.name }}</p>
+                        <a href="{% url "products:product_detail" product.slug %}"><p class="text-yellow-500 uppercase">{{ product.name }}</p></a>
                         <p class="flex flex-row gap-1">
                             <span>{{ product.price }}</span>
                             <span>تومان</span>

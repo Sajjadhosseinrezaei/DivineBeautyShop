@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView, DetailView
 from .models import Product
 
 class ProductListView(ListView):
@@ -20,3 +20,12 @@ class ProductListView(ListView):
         # اضافه کردن داده‌های اضافی مثل دسته‌بندی‌ها یا محصولات ویژه
         context['featured_products'] = Product.objects.filter(is_featured=True, is_available=True)[:4]
         return context
+    
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'products/html/product_detail.html'  # مسیر تمپلیت شما
+    context_object_name = 'product'  # نامی که توی تمپلیت استفاده می‌شه
+    slug_field = 'slug'  # فیلد اسلاگ برای پیدا کردن محصول
+    slug_url_kwarg = 'slug'  # پارامتر اسلاگ در URL

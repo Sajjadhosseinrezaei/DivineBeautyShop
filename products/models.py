@@ -8,6 +8,7 @@ class Category(MPTTModel):
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True, verbose_name="اسلاگ")
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children', verbose_name="دسته‌بندی والد")
     is_active = models.BooleanField(default=True, verbose_name="فعال")
+    image = models.ImageField(upload_to='categories/%Y/%m/%d/', blank=True, null=True, verbose_name="تصویر دسته‌بندی")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="تاریخ به‌روزرسانی")
 

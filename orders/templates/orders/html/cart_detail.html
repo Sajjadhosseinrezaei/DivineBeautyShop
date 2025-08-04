@@ -1,0 +1,83 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+    <!-- جدول سبد خرید -->
+    <div class="container max-w-5xl mx-auto mt-20 p-4 bg-white/70 rounded-md shadow font-Zain">
+        <h2 class="text-2xl font-bold mb-4 text-center text-yellow-500">سبد خرید شما</h2>
+
+        <div class="overflow-auto">
+            <table class="w-full text-center border-collapse">
+                <thead class="bg-gray-100">
+                    <tr class="text-sm sm:text-base">
+                        <th class="p-2 border">محصول</th>
+                        <th class="p-2 border">موجودی</th>
+                        <th class="p-2 border">تصویر</th>
+                        <th class="p-2 border">قیمت واحد</th>
+                        <th class="p-2 border">تعداد</th>
+                        <th class="p-2 border">مجموع</th>
+                        <th class="p-2 border">عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white">
+                        <td class="p-2 border">Velvet Matte Lipstick ماتیک </td>
+                        <td class="p-2 border">10</td>
+                        <td class="p-2 border">
+                            <img src="../img/products/product-1.jpg" alt="محصول" class="w-12 h-12 mx-auto">
+                        </td>
+                        <td class="p-2 border">50,000</td>
+                        <td class="p-2 border">
+                            <div class="flex justify-center items-center gap-2">
+                                <button class="px-2 bg-gray-100 rounded">-</button>
+                                <span>1</span>
+                                <button class="px-2 bg-gray-100 rounded">+</button>
+                            </div>
+                        </td>
+                        <td class="p-2 border font-bold">50,000</td>
+                        <td class="p-2 border">
+                            <button
+                                class="text-yellow-500 border-2 border-gray-400 hover:text-white hover:bg-gray-400 px-4 py-1 rounded-full duration-300 delay-100 transition-all">حذف</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- جزئیات سفارش -->
+        <div class="mt-6 flex flex-col md:flex-row justify-between gap-4">
+            <div>
+                <h3 class="font-bold mb-2">جزئیات سبد خرید</h3>
+                <p>تعداد کل آیتم‌ها: <strong>1</strong></p>
+                <p>مجموع قیمت: <strong>50,000 تومان</strong></p>
+                <button
+                    class="text-yellow-500 border-2 border-gray-400 hover:text-white hover:bg-gray-400 px-4 py-1 rounded-full duration-300 delay-100 transition-all">ادامه
+                    خرید</button>
+            </div>
+
+            <!-- فرم اطلاعات ارسال -->
+            <div class="flex-1">
+                <h3 class="font-bold mb-2">اطلاعات ارسال</h3>
+                <form class="grid grid-cols-1 gap-3">
+                    <input type="text" placeholder="نام تحویل‌گیرنده"
+                        class="p-2 border focus:outline-none focus:ring-0 focus:border-gray-200 rounded">
+                    <input type="text" placeholder="آدرس"
+                        class="p-2 border focus:outline-none focus:ring-0 focus:border-gray-200 rounded">
+                    <input type="text" placeholder="کد پستی"
+                        class="p-2 border focus:outline-none focus:ring-0 focus:border-gray-200 rounded">
+                    <input type="text" placeholder="شماره تماس تحویل‌گیرنده"
+                        class="p-2 border focus:outline-none focus:ring-0 focus:border-gray-200 rounded">
+                    <select
+                        class=" bg-gray-100 p-2 border focus:outline-none focus:ring-0 focus:border-gray-200 rounded">
+                        <option class="bg-gray-100">پرداخت آنلاین</option>
+                        <option class="bg-gray-100">پرداخت در محل</option>
+                    </select>
+                    <button type="submit"
+                        class="text-yellow-500 border-2 border-gray-400 hover:text-white hover:bg-gray-400 px-4 py-1 rounded-full duration-300 delay-100 transition-all">تأیید
+                        سفارش</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

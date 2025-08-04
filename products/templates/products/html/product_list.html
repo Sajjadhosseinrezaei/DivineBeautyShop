@@ -32,9 +32,13 @@
                             <span>تومان</span>
                         </p>
                     </div>
-                    <button class="bg-white text-lg rounded-sm px-2 py-1 border-b-2 shadow-sm btn-shop ml-auto">
-                        <a href=""><i class="ri-shopping-cart-fill"></i></a>
-                    </button>
+                   <form action="{% url 'orders:cart_add' product.slug %}" method="post" class="ml-auto">
+                        {% csrf_token %}
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="bg-white text-lg rounded-sm px-2 py-1 border-b-2 shadow-sm btn-shop">
+                            <i class="ri-shopping-cart-fill"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
             {% empty %}

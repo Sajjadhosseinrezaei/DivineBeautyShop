@@ -49,7 +49,7 @@
                         <!-- list -->
                             <ul class="text-gray-400 flex flex-col items-center gap-y-5">
                                 <li><a href="{% url "home:home" %}" class="transition-all duration-300 hover:text-rose-200">فروشگاه</a></li>
-                                <li><a href="{% url "products:product_lsit" %}" class="transition-all duration-300 hover:text-rose-200">محصولات</a></li>
+                                <li><a href="{% url "products:product_list" %}" class="transition-all duration-300 hover:text-rose-200">محصولات</a></li>
                                 <li><a href="#" class="transition-all duration-300 hover:text-rose-200">سبدخرید</a></li>
                                 {% if user.is_authenticated %}
                                     <li>
@@ -79,7 +79,7 @@
                     <!-- list -->
                    <ul class="text-gray-400 flex gap-x-4">
                         <li><a href="{% url "home:home" %}" class="border-l pl-4 transition-all duration-300 hover:text-rose-200">فروشگاه</a></li>
-                        <li><a href="{% url "products:product_lsit" %}" class="border-l pl-4 transition-all duration-300 hover:text-rose-200">محصولات</a></li>
+                        <li><a href="{% url "products:product_list" %}" class="border-l pl-4 transition-all duration-300 hover:text-rose-200">محصولات</a></li>
                         <li><a href="#" class="border-l pl-4 transition-all duration-300 hover:text-rose-200">سبدخرید</a></li>
                 {% if user.is_authenticated %}  
                         <li class="border-l pl-4 transition-all duration-300 hover:text-rose-200">

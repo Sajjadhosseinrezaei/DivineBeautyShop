@@ -1,0 +1,116 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container max-w-4xl mx-auto mt-10 p-4 bg-white rounded-md shadow-md font-Zain text-sm sm:text-base">
+    <h2 class="text-2xl font-bold text-center text-yellow-500 mb-6">جزئیات سفارش</h2>
+
+    {% if messages %}
+    <div class="mb-4">
+        {% for message in messages %}
+        <p class="text-center {% if message.tags == 'error' %}text-red-500{% else %}text-green-500{% endif %}">{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="overflow-x-auto mb-6">
+        <table class="w-full border border-gray-200">
+            <tbody class="text-right text-gray-700">
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold w-1/3">شماره سفارش:</td>
+                    <td class="px-4 py-2">{{ order.id }}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">ایمیل کاربر:</td>
+                    <td class="px-4 py-2">{{ order.user.email }}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">تاریخ ایجاد:</td>
+                    <td class="px-4 py-2">{{ order.created_at|date:"d-m-Y H:i" }}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">تاریخ بروزرسانی:</td>
+                    <td class="px-4 py-2">{{ order.updated_at|date:"d-m-Y H:i" }}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">وضعیت پرداخت:</td>
+                    <td class="px-4 py-2">
+                        <span class="text-yellow-500 border-2 border-gray-400 px-4 py-1 rounded-full">{{ order.get_payment_status_display }}</span>
+                    </td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">آدرس:</td>
+                    <td class="px-4 py-2">{{ order.address }}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">کد پستی:</td>
+                    <td class="px-4 py-2">{{ order.postal_code }}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">نام تحویل‌گیرنده:</td>
+                    <td class="px-4 py-2">{{ order.recipient_name }}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">شماره تماس:</td>
+                    <td class="px-4 py-2">{{ order.phone_number }}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">کد رهگیری:</td>
+                    <td class="px-4 py-2">{{ order.tracking_code|default:"هنوز صادر نشده" }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 font-semibold">وضعیت سفارش:</td>
+                    <td class="px-4 py-2">
+                        <span class="text-white bg-gray-400 px-4 py-1 rounded-full">{{ order.get_status_display }}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 class="text-lg font-bold mb-2 text-gray-700">آیتم‌های سفارش</h3>
+    <div class="overflow-x-auto mb-6">
+        <table class="w-full text-center border border-gray-200 rounded">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="p-2 border">محصول</th>
+                    <th class="p-2 border">تعداد</th>
+                    <th class="p-2 border">قیمت واحد</th>
+                    <th class="p-2 border">مجموع</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.items.all %}
+                <tr class="bg-white">
+                    <td class="p-2 border">{{ item.product.name }}</td>
+                    <td class="p-2 border">{{ item.quantity }}</td>
+                    <td class="p-2 border">{{ item.price }} تومان</td>
+                    <td class="p-2 border font-bold">{{ item.get_subtotal }} تومان</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="p-4 text-center text-gray-500">هیچ آیتمی در سفارش وجود ندارد.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-left">
+        <p class="font-bold text-lg">جمع کل: <span class="text-yellow-500">{{ order.total_price }} تومان</span></p>
+
+        {% if order.payment_status == 'unpaid' and order.status == 'pending_payment' %}
+        <a href="{% url 'order_pay' order.id %}"
+           class="mt-4 flex items-center gap-2 text-yellow-500 border-2 border-gray-400 hover:text-white hover:bg-gray-400 px-4 py-1 rounded-full duration-300 delay-100 transition-all">
+            <i class="ri-bank-card-2-fill"></i>
+            پرداخت سفارش
+        </a>
+        <div class="mt-4 bg-yellow-50 text-yellow-700 px-4 py-2 rounded text-sm">
+            لطفاً برای تکمیل سفارش، مبلغ {{ order.total_price }} تومان را پرداخت نمایید.
+        </div>
+        {% else %}
+        <p class="mt-4 text-green-500">سفارش پرداخت شده یا در حال پردازش است.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

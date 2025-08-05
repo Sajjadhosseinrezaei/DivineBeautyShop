@@ -17,8 +17,17 @@ class CartView(LoginRequiredMixin, TemplateView):
         return context
 
 class CartAddView(LoginRequiredMixin, View):
-    def post(self, request, slug):
-        product = get_object_or_404(Product, slug=slug)
+
+    def dispatch(self, request, *args, **kwargs):
+        product = get_object_or_404(Product, id=kwargs['id'])
+        if product.stock > 0:
+            return super().dispatch(request, *args, **kwargs)
+        
+        messages.error(request, "این محصول موجود نمیباشد")
+        return redirect("products:product_detail" , id=product.id)
+    
+    def post(self, request, id):
+        product = get_object_or_404(Product, id=id)
         quantity = int(request.POST.get('quantity', 1))
         cart, created = Cart.objects.get_or_create(user=self.request.user)
         cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)

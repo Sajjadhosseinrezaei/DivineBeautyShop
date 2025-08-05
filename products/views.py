@@ -28,5 +28,5 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'product'
 
     def get_object(self, queryset=None):
-        slug = self.kwargs.get('slug')
-        return get_object_or_404(Product, slug=slug)
+        id = self.kwargs.get('id')
+        return get_object_or_404(Product, id=id)

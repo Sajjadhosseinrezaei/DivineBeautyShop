@@ -3,11 +3,20 @@
 
 {% block content %}
 <div class="text-gray-400 bg-white" dir="rtl">
+    <!-- نمایش پیام‌ها -->
+    {% if messages %}
+    <div class="container mx-auto px-4 py-4">
+        {% for message in messages %}
+        <p class="text-center {% if message.tags == 'error' %}text-red-500{% else %}text-green-500{% endif %}">{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <!-- navbar and header -->
     <div class="flex flex-row relative py-8 px-12 sm:px-14 border-b-2 border-b-rose-200">
         <p class="w-full font-Zain text-2xl sm:text-3xl text-yellow-500 text-right">سبد خرید</p>
         <div class="z-50 text-2xl sm:text-3xl text-left">
-            <a href="">
+            <a href="{% url 'orders:cart' %}">
                 <i class="ri-shopping-cart-line text-yellow-500 duration-300 cursor-pointer"></i>
             </a>
         </div>
@@ -53,7 +62,7 @@
                         </p>
 
                         <div class="flex flex-row gap-4 mb-4">
-                            <form method="post" action="{% url "orders:cart_add" product.slug%}">
+                            <form method="post" action="{% url 'orders:cart_add' id=product.id %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="quantity" id="quantity" value="1">
                                 <button type="submit" class="btn-shop1 btn-sm">سبدخرید</button>
@@ -89,7 +98,7 @@
 
 <script>
     let count = 1;
-    let pricePerItem = {{ product.price }};
+    let pricePerItem = {{ product.price|default:0 }};
     function updatePrice() {
         document.getElementById("price").innerText =
             (count * pricePerItem).toLocaleString() + " تومان";
@@ -97,7 +106,7 @@
         document.getElementById("quantity").value = count;
     }
     function increment() {
-        if (count < {{ product.stock }}) {
+        if (count < {{ product.stock|default:0 }}) {
             count++;
             updatePrice();
         }

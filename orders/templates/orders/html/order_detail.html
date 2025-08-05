@@ -73,19 +73,19 @@
         <table class="w-full text-center border border-gray-200 rounded">
             <thead class="bg-gray-100">
                 <tr>
-                    <th class="p-2 border">محصول</th>
-                    <th class="p-2 border">تعداد</th>
-                    <th class="p-2 border">قیمت واحد</th>
-                    <th class="p-2 border">مجموع</th>
+                    <th class="p-2 border" style="color: black;">محصول</th>
+                    <th class="p-2 border" style="color: black;">تعداد</th>
+                    <th class="p-2 border" style="color: black;">قیمت واحد</th>
+                    <th class="p-2 border" style="color: black;">مجموع</th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in order.items.all %}
-                <tr class="bg-white">
-                    <td class="p-2 border">{{ item.product.name }}</td>
-                    <td class="p-2 border">{{ item.quantity }}</td>
-                    <td class="p-2 border">{{ item.price }} تومان</td>
-                    <td class="p-2 border font-bold">{{ item.get_subtotal }} تومان</td>
+                <tr class="bg-black">
+                    <td class="p-2 border" style="color: black;">{{ item.product.name }}</td>
+                    <td class="p-2 border" style="color: black;">{{ item.quantity }}</td>
+                    <td class="p-2 border" style="color: black;">{{ item.price }} تومان</td>
+                    <td class="p-2 border font-bold" style="color: black;">{{ item.get_subtotal }} تومان</td>
                 </tr>
                 {% empty %}
                 <tr>
@@ -100,7 +100,7 @@
         <p class="font-bold text-lg">جمع کل: <span class="text-yellow-500">{{ order.total_price }} تومان</span></p>
 
         {% if order.payment_status == 'unpaid' and order.status == 'pending_payment' %}
-        <a href="{% url 'order_pay' order.id %}"
+        <a href="{% url 'orders:order_pay' order.id %}"
            class="mt-4 flex items-center gap-2 text-yellow-500 border-2 border-gray-400 hover:text-white hover:bg-gray-400 px-4 py-1 rounded-full duration-300 delay-100 transition-all">
             <i class="ri-bank-card-2-fill"></i>
             پرداخت سفارش

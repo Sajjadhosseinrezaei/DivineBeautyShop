@@ -28,7 +28,11 @@ class CartAddView(LoginRequiredMixin, View):
             cart_item.quantity = quantity
         if cart_item.quantity > product.stock:
             messages.error(request, f"موجودی کافی نیست. حداکثر {product.stock} عدد موجود است.")
+
             cart_item.quantity = product.stock
+            cart_item.save()
+            return redirect('orders:cart')
+        
         cart_item.save()
         messages.success(request, f"{product.name} به سبد خرید اضافه شد.")
         return redirect('orders:cart')
@@ -72,7 +76,7 @@ class OrderCreateView(LoginRequiredMixin, View):
 
         if not all([recipient_name, address, postal_code, phone_number, payment_method]):
             messages.error(request, "لطفاً تمام فیلدهای اطلاعات ارسال را پر کنید.")
-            return redirect('cart')
+            return redirect('orders:cart')
 
         order = Order.objects.create(
             user=request.user,
@@ -116,7 +120,7 @@ class OrderPayView(LoginRequiredMixin, View):
         order = get_object_or_404(Order, id=order_id, user=request.user)
         if order.payment_status != 'unpaid' or order.status != 'pending_payment':
             messages.error(request, "این سفارش در حال حاضر قابل پرداخت نیست.")
-            return redirect('order_detail', pk=order.id)
+            return redirect('orders:order_detail', pk=order.id)
         return render(request, self.template_name, {'order': order})
 
     def post(self, request, order_id):
@@ -136,7 +140,7 @@ class OrderPayView(LoginRequiredMixin, View):
         if receipt_image:
             order.receipt_image = receipt_image
         order.payment_status = 'paid'
-        order.status = 'processing'
+        order.status = 'waiting_admin'
         order.save()
 
         messages.success(request, f"پرداخت سفارش {order.id} ثبت شد و در حال بررسی است.")

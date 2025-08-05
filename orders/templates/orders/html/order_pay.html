@@ -1,53 +1,74 @@
-{% extends "index.html" %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<div class="container max-w-md mx-auto mt-16 bg-white p-6 rounded-md shadow font-Zain text-sm sm:text-base">
-    <!-- هدر -->
-    <div class="bg-yellow-500 text-white text-center text-lg font-bold py-2 rounded">
-        پرداخت سفارش
-    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'img/divine-logo.png' %}" type="image/x-icon">
+    <!-- css -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.min.css">
+    <!-- swiper-->
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
 
-    <!-- پیام‌ها -->
-    {% if messages %}
-    <div class="mb-4">
-        {% for message in messages %}
-        <p class="text-center {% if message.tags == 'error' %}text-red-500{% else %}text-green-500{% endif %}">{{ message }}</p>
-        {% endfor %}
-    </div>
-    {% endif %}
+    <!-- title -->
+    <title>Divine Beauty</title>
+</head>
 
-    <!-- اطلاعات سفارش -->
-    <div class="text-center my-6">
-        <p class="text-gray-700">کد پیگیری سفارش</p>
-        <p class="text-gray-400 font-bold text-lg">{{ order.id }}</p>
-        <p class="mt-4 text-gray-700">مبلغ قابل پرداخت</p>
-        <p class="text-yellow-500 font-bold text-xl">{{ order.total_price }} تومان</p>
-    </div>
+<body class="bg-white text-gray-700" dir="rtl">
 
-    <!-- کارت بانکی -->
-    <div class="bg-gray-100 rounded-md p-4 mb-6">
-        <h3 class="text-center font-bold mb-3">اطلاعات حساب بانکی فروشگاه</h3>
-        <div class="bg-gradient-to-tr from-gray-800 to-black/65 text-white rounded-lg shadow-md p-4 text-center">
-            <p class="text-sm mb-1">بانک سپه <i class="ri-bank-card-2-fill"></i></p>
-            <p class="text-lg tracking-widest font-mono mb-1">5892-9999-9999-9999</p>
-            <p class="text-xs text-gray-300">فروشگاه دیجیتال</p>
+    <div class="container max-w-md mx-auto mt-16 bg-white p-6 rounded-md shadow font-Zain text-sm sm:text-base">
+        <!-- هدر -->
+        <div class="bg-yellow-500 text-white text-center text-lg font-bold py-2 rounded">
+            پرداخت سفارش
         </div>
-    </div>
 
-    <!-- راهنمای پرداخت -->
-    <div class="bg-yellow-50 border border-yellow-200 text-yellow-700 p-4 text-sm rounded mb-6 leading-relaxed">
-        <p class="font-semibold mb-2 flex items-center gap-1">
-            <span class="text-yellow-500 text-lg">★</span> راهنمای پرداخت:
-        </p>
-        <ol class="list-decimal pr-5 space-y-1">
-            <li>مبلغ {{ order.total_price }} تومان را به شماره کارت بالا واریز نمایید.</li>
-            <li>شماره پیگیری یا تصویر رسید پرداخت را وارد کنید.</li>
-            <li>بر روی دکمه ثبت پرداخت کلیک نمایید.</li>
-            <li>در صورت مشکل با پشتیبانی تماس بگیرید.</li>
-        </ol>
-    </div>
 
+        <!-- پیام‌ها -->
+        {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+            <p class="text-center {% if message.tags == 'error' %}text-red-500{% else %}text-green-500{% endif %}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <!-- اطلاعات سفارش -->
+        <div class="text-center my-6">
+            <p class="text-gray-700">کد پیگیری سفارش</p>
+            <p class="text-gray-400 font-bold text-lg">{{order.id}}</p>
+            <p class="mt-4 text-gray-700">مبلغ قابل پرداخت</p>
+            <p class="text-yellow-500 font-bold text-xl">{{ order.total_price }}  تومان</p>
+        </div>
+
+        <!-- کارت بانکی -->
+        <div class="bg-gray-100 rounded-md p-4 mb-6">
+            <h3 class="text-center font-bold mb-3">اطلاعات حساب بانکی فروشگاه</h3>
+            <div class="bg-gradient-to-tr from-gray-800 to-black/65 text-white rounded-lg shadow-md p-4 text-center">
+                <p class="text-sm mb-1">بانک سپه <i class="ri-bank-card-2-fill"></i></p>
+                <p class="text-lg tracking-widest font-mono mb-1">5892-9999-9999-9999</p>
+                <p class="text-xs text-gray-300">فروشگاه دیجیتال</p>
+            </div>
+        </div>
+
+        <!-- راهنمای پرداخت -->
+        <div class="bg-yellow-50 border border-yellow-200 text-yellow-700 p-4 text-sm rounded mb-6 leading-relaxed">
+            <p class="font-semibold mb-2 flex items-center gap-1">
+                <span class="text-yellow-500 text-lg">★</span> راهنمای پرداخت:
+            </p>
+            <ol class="list-decimal pr-5 space-y-1">
+                <li>مبلغ 50,000 تومان را به شماره کارت بالا واریز نمایید.</li>
+                <li>شماره پیگیری یا تصویر رسید پرداخت را وارد کنید.</li>
+                <li>بر روی دکمه ثبت پرداخت کلیک نمایید.</li>
+                <li>در صورت مشکل با پشتیبانی تماس بگیرید.</li>
+            </ol>
+        </div>
+
+        <!-- فرم پرداخت -->
     <!-- فرم پرداخت -->
     <form method="post" enctype="multipart/form-data" class="space-y-4">
         {% csrf_token %}
@@ -65,11 +86,19 @@
 
         <!-- دکمه‌ها -->
         <div class="flex justify-between mt-6">
-            <a href="{% url 'order_detail' order.id %}"
+            <a href="{% url 'orders:order_detail' order.id %}"
                class="text-yellow-500 border border-gray-400 hover:text-white hover:bg-gray-400 px-4 py-1 rounded-full duration-300 delay-100 transition-all">انصراف</a>
             <button type="submit"
                     class="text-yellow-500 border-2 border-gray-400 hover:text-white hover:bg-gray-400 px-4 py-1 rounded-full duration-300 delay-100 transition-all">ثبت پرداخت</button>
         </div>
     </form>
-</div>
-{% endblock content %}
+    </div>
+
+    <!--swiper-->
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+        <script src="js/swiper-bundle.min.js"></script>
+    <!-- main js-->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

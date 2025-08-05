@@ -3,6 +3,7 @@ from django.utils.text import slugify
 from mptt.models import MPTTModel, TreeForeignKey
 
 
+
 class Category(MPTTModel):
     name = models.CharField(max_length=200, unique=True, verbose_name="نام دسته‌بندی")
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True, verbose_name="اسلاگ")
@@ -22,11 +23,18 @@ class Category(MPTTModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name, allow_unicode=True)
+            base_slug = slugify(self.name, allow_unicode=True)
+            slug = base_slug
+            counter = 1
+            while Category.objects.filter(slug=slug).exclude(id=self.id).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
+
 
 class Product(models.Model):
     name = models.CharField(max_length=200, verbose_name="نام محصول")
@@ -48,7 +56,13 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name, allow_unicode=True)
+            base_slug = slugify(self.name, allow_unicode=True)
+            slug = base_slug
+            counter = 1
+            while Product.objects.filter(slug=slug).exclude(id=self.id).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         super().save(*args, **kwargs)
 
     def __str__(self):

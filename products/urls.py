@@ -1,11 +1,10 @@
-from django.urls import path, re_path
+from django.urls import path
 from . import views
 
-
-
-
 app_name = 'products'
+
 urlpatterns = [
     path('list/', views.ProductListView.as_view(), name='product_list'),
-    re_path(r'products/(?P<slug>[-\w]+)/', views.ProductDetailView.as_view(), name='product_detail'),
+    path('list/<int:id>/', views.ProductListView.as_view(), name='product_list_by_category'),
+    path('<slug:slug>/', views.ProductDetailView.as_view(), name='product_detail'),
 ]

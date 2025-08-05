@@ -12,7 +12,7 @@
         <div class="flex flex-wrap justify-center gap-6 md:flex-nowrap md:justify-between gap-x-12">
             {% for category in categories %}
             <div class="menu__card flex flex-col items-center gap-y-2">
-                <a href="">
+                <a href="{% url "products:product_list_by_category" category.id %}">
                     {% if category.image %}
                     <img src="{{ category.image.url }}" alt="{{ category.name }}"
                          class="w-16 h-16 rounded-full transition-transform duration-300 ease-out hover:scale-110 hover:opacity-95 object-cover">

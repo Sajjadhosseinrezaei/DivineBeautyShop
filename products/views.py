@@ -12,9 +12,9 @@ class ProductListView(ListView):
 
     def get_queryset(self):
         queryset = Product.objects.filter(is_available=True)
-        category_slug = self.request.GET.get('category')
-        if category_slug:
-            queryset = queryset.filter(category__slug=category_slug)
+        category_id = self.kwargs.get('id')
+        if category_id:
+            queryset = queryset.filter(category__id=category_id)
         return queryset.order_by('-created_at')
 
     def get_context_data(self, **kwargs):

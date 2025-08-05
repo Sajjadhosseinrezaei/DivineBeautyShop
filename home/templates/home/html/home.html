@@ -80,10 +80,10 @@
                                     </p>
                                 </div>
                                 <button class="btn btn-sm btn-visit w-40 lg:w-auto mx-auto lg:mx-0">
-                                    <a href="{% url 'product_detail' product.slug %}">بازدید</a>
+                                    <a href="{% url 'products:product_detail' product.slug %}">بازدید</a>
                                 </button>
                                 <button class="bg-white text-lg rounded-sm px-2 py-1 border-b-2 shadow-sm btn-shop ml-auto">
-                                    <a href="{% url 'cart_add' product.slug %}"><i class="ri-shopping-cart-fill"></i></a>
+                                    <a href="{% url 'orders:cart_add' product.slug %}"><i class="ri-shopping-cart-fill"></i></a>
                                 </button>
                             </div>
                         </div>

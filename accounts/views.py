@@ -5,10 +5,12 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from .models import CustomUser
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
+from orders.models import Order, Cart
 
 logger = logging.getLogger(__name__)
 
@@ -189,3 +191,15 @@ class LogoutView(LoginRequiredMixin, View):
     def post(self, request):
         logout(request)
         return redirect(reverse_lazy('home:home'))
+    
+
+
+class ProfileView(TemplateView):
+    template_name = 'accounts/html/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["orders"] = Order.objects.filter(user=self.request.user)
+        context["cart"] = get_object_or_404(Cart, user=self.request.user)
+        return context
+    

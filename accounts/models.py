@@ -29,7 +29,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('ایمیل'), unique=True)
     is_active = models.BooleanField(_('فعال'), default=False)
     is_staff = models.BooleanField(_('وضعیت کارمند'), default=False)
-
+    date_join = models.DateTimeField(auto_now_add=True)
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
@@ -41,3 +41,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"

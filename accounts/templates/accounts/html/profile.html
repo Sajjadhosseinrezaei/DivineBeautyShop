@@ -1,0 +1,102 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-10 text-gray-400 bg-white" dir="rtl">
+    <!-- پیام‌ها -->
+    {% if messages %}
+    <div class="mb-4">
+        {% for message in messages %}
+        <p class="text-center {% if message.tags == 'error' %}text-red-500{% else %}text-green-500{% endif %}">{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- هدر -->
+    <div class="flex flex-row relative py-8 px-12 sm:px-14 border-b-2 border-b-rose-200">
+        <p class="w-full font-Zain text-2xl sm:text-3xl text-yellow-500 text-right">پروفایل کاربر</p>
+    </div>
+
+    <!-- اطلاعات کاربر -->
+    <div class="mt-6">
+        <h2 class="text-2xl font-bold text-yellow-500 mb-4">اطلاعات کاربر</h2>
+        <div class="border-2 border-rose-200 rounded-md p-6">
+            <p class="text-lg"><span class="font-semibold">نام:</span> {{ user.get_full_name|default:user.first_name}}</p>
+            <p class="text-lg"><span class="font-semibold">ایمیل:</span> {{ user.email|default:"ثبت نشده" }}</p>
+            <p class="text-lg"><span class="font-semibold">تاریخ عضویت:</span> {{ user.date_join|date:"d-m-Y" }}</p>
+        </div>
+    </div>
+
+    <!-- سبد خرید -->
+    <div class="mt-8">
+        <h2 class="text-2xl font-bold text-yellow-500 mb-4">سبد خرید</h2>
+        {% if cart.items.exists %}
+        <div class="overflow-x-auto">
+            <table class="w-full border border-gray-200 rounded">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="p-2 border text-right">محصول</th>
+                        <th class="p-2 border text-right">تعداد</th>
+                        <th class="p-2 border text-right">قیمت واحد</th>
+                        <th class="p-2 border text-right">مجموع</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart.items.all %}
+                    <tr>
+                        <td class="p-2 border text-right">{{ item.product.name }}</td>
+                        <td class="p-2 border text-right">{{ item.quantity }}</td>
+                        <td class="p-2 border text-right">{{ item.product.price|floatformat:2 }} تومان</td>
+                        <td class="p-2 border text-right">{{ item.get_subtotal|floatformat:2 }} تومان</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p class="mt-4 text-lg font-bold text-right">جمع کل سبد: <span class="text-yellow-500">{{ cart.get_total_price|floatformat:2 }} تومان</span></p>
+            <a href="{% url 'orders:cart' %}" class="mt-4 inline-block text-yellow-500 border-2 border-gray-400 hover:text-white hover:bg-gray-400 px-4 py-1 rounded-full">مشاهده سبد خرید</a>
+        </div>
+        {% else %}
+        <p class="text-lg text-gray-500">سبد خرید شما خالی است.</p>
+        {% endif %}
+    </div>
+
+    <!-- سفارش‌ها -->
+    <div class="mt-8">
+        <h2 class="text-2xl font-bold text-yellow-500 mb-4">سفارش‌ها</h2>
+        {% if orders.exists %}
+        <div class="overflow-x-auto">
+            <table class="w-full border border-gray-200 rounded">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="p-2 border text-right">شماره سفارش</th>
+                        <th class="p-2 border text-right">تاریخ</th>
+                        <th class="p-2 border text-right">وضعیت</th>
+                        <th class="p-2 border text-right">مجموع</th>
+                        <th class="p-2 border text-right">عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td class="p-2 border text-right">{{ order.id }}</td>
+                        <td class="p-2 border text-right">{{ order.created_at|date:"d-m-Y" }}</td>
+                        <td class="p-2 border text-right">{{ order.get_status_display }}</td>
+                        <td class="p-2 border text-right">{{ order.total_price|floatformat:2 }} تومان</td>
+                        <td class="p-2 border text-right">
+                            <a href="{% url 'orders:order_detail' pk=order.id %}" class="text-yellow-500 hover:underline">جزئیات</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-lg text-gray-500">هیچ سفارشی ثبت نشده است.</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="copy__right container">
+    <p class="text-center mt-10 opacity-50 text-gray-400">Copyright &copy; 2025. marziehfeyz7.</p>
+</div>
+{% endblock content %}

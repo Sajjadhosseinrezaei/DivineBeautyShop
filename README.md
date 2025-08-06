@@ -1,208 +1,173 @@
-# 🛍️ Divine Beauty Online Store
+# 🛍️ Divine Beauty Shop
+
+A Django-based Persian/English bilingual e-commerce web application with user authentication, product management, cart, order, and email verification functionality. Built using Django 5.2.4, Python 3.13.2, PostgreSQL, and Tailwind CSS.
+
+---
 
 ## 🇮🇷 فروشگاه آنلاین Divine Beauty
 
-این پروژه یک **وب اپلیکیشن فروشگاه آنلاین** است که با استفاده از **Django** توسعه داده شده و امکانات کاملی را برای خرید آنلاین محصولات زیبایی فراهم می‌کند. رابط کاربری روان و فارسی، پشتیبانی از اسلاگ‌های فارسی و قابلیت‌های مختلف مثل مدیریت سبد خرید و سفارش‌ها، تجربه‌ی خرید راحتی را برای کاربران فراهم کرده است.
+این پروژه یک **وب‌اپلیکیشن فروشگاه آنلاین** است که با استفاده از Django توسعه داده شده و امکاناتی مثل مدیریت کاربران، محصولات، سبد خرید، سفارش، تأیید ایمیل، محافظت رباتی و رابط کاربری مدرن را فراهم می‌کند.
 
 ---
 
-### ✨ ویژگی‌ها
+## ✨ Features / ویژگی‌ها
 
-- **مدیریت محصولات**: نمایش محصولات با نام، قیمت، توضیحات و موجودی – پشتیبانی کامل از اسلاگ‌های فارسی.
-- **سبد خرید پویا**: امکان افزودن، حذف و به‌روزرسانی آیتم‌ها در سبد خرید.
-- **سفارش و پرداخت**: ثبت سفارش با انتخاب نوع پرداخت (آنلاین یا پرداخت در محل) و اطلاعات ارسال.
-- **حساب کاربری**: ثبت‌نام، ورود، خروج و مشاهده‌ی پروفایل با تاریخچه سفارش‌ها و وضعیت سبد خرید.
-- **پشتیبانی کامل از زبان فارسی** در رابط کاربری و محتوای سایت.
-- **پیام‌رسانی تعاملی** با استفاده از `django.contrib.messages`.
+### 👤 User Authentication / احراز هویت
 
----
+- ثبت‌نام با نام، نام خانوادگی، ایمیل و رمز عبور
+- تأیید ایمیل قبل از ورود
+- ورود/خروج امن با reCAPTCHA v2 و honeypot
+- مدل کاربر سفارشی (CustomUser) با ایمیل به‌عنوان فیلد یکتا
+- پیام‌رسانی بر اساس Session (با PostgreSQL)
 
-### 🛠 تکنولوژی‌ها
+### 🛒 فروشگاه
 
-- **زبان برنامه‌نویسی**: Python 3.x  
-- **فریم‌ورک وب**: Django 4.x  
-- **دیتابیس**: PostgreSQL  
-- **فرانت‌اند**: HTML, CSS, Tailwind CSS, JavaScript  
-- **فونت‌ها**: Zain، Jost (فارسی)  
-- **کتابخانه‌ها**:  
-  - `django.contrib.auth`: مدیریت کاربران  
-  - `django.contrib.messages`: نمایش پیام‌ها  
+- مدیریت محصولات با پشتیبانی از اسلاگ فارسی
+- سبد خرید پویا با افزودن، حذف، به‌روزرسانی
+- ثبت سفارش با اطلاعات ارسال و روش پرداخت
+- پروفایل کاربر شامل سبد و تاریخچه سفارش
+- رابط کاربری واکنش‌گرا با Tailwind CSS، Remixicon، Swiper
 
 ---
 
-### 📦 پیش‌نیازها
+## 🛠 Technologies / تکنولوژی‌ها
 
-- Python 3.8 یا بالاتر  
-- Django 4.x  
-- virtualenv (اختیاری برای ساخت محیط مجازی)  
-- مرورگر مدرن  
-
----
-
-### ⚙️ نصب و اجرا
-
-```bash
-# کلون کردن پروژه
-git clone https://github.com/Sajjadhosseinrezaei/DivineBeautyShop.git
-cd DivineBeautyShop
-
-# ایجاد محیط مجازی
-python -m venv venv
-source venv/bin/activate  # در ویندوز: venv\Scripts\activate
-
-# نصب وابستگی‌ها
-pip install -r requirements.txt
-
-# اعمال مایگریشن‌ها
-python manage.py makemigrations
-python manage.py migrate
-
-# جمع‌آوری فایل‌های استاتیک
-python manage.py collectstatic
-
-# ایجاد سوپریوزر (اختیاری)
-python manage.py createsuperuser
-
-# اجرای سرور
-python manage.py runserver
-```
-
-> 📍 پروژه روی `http://127.0.0.1:8000` در حال اجرا خواهد بود.
-
----
-
-### 🗂 ساختار پروژه
-
-```
-DivineBeautyShop/
-├── accounts/
-│   ├── models.py
-│   ├── views.py
-│   └── urls.py
-├── orders/
-│   ├── models.py
-│   ├── views.py
-│   └── urls.py
-├── products/
-│   ├── models.py
-│   ├── views.py
-│   └── urls.py
-├── templates/
-├── static/
-```
-
----
-
-### 🌐 مسیرهای کلیدی
-
-- `/` : صفحه اصلی  
-- `/list/` : لیست محصولات  
-- `/products/<id>/` : جزئیات محصول  
-- `/cart/` : سبد خرید  
-- `/cart/add/<id>/` : افزودن به سبد  
-- `/order/create/` : ثبت سفارش  
-- `/order/<pk>/` : مشاهده سفارش  
-- `/accounts/register/` : ثبت‌نام  
-- `/accounts/login/` : ورود  
-- `/accounts/logout/` : خروج  
-- `/accounts/profile/` : پروفایل  
-
----
-
-### 💡 نکات مهم
-
-- **مدیریت موجودی**: بررسی موجودی قبل از افزودن به سبد یا ثبت سفارش.  
-- **نمایش پیام‌ها**: پیام‌های موفقیت/خطا با `django.contrib.messages`.
-
----
-
-### 🚀 توسعه‌های آینده
-
-- اتصال درگاه پرداخت آنلاین  
-- رابط کاربری تعاملی‌تر با انیمیشن  
-- فیلترهای پیشرفته برای جستجوی محصولات  
-- تخفیف و سیستم کد تخفیف (Promocode)  
-- اعتبارسنجی حرفه‌ای فرم‌ها  
-
----
-
-### 🤝 مشارکت
-
-برای مشارکت لطفاً یک issue باز کنید یا pull request بفرستید. در صورت مشاهده باگ، مخصوصاً در مسیرهای redirect، لطفاً با جزئیات گزارش دهید.
-
----
-
-### 📧 تماس
-
-- توسعه‌دهنده: **sajjadhossein**  
-- ایمیل: [sajjadhosseinrezaei@yahoo.com](mailto:sajjadhosseinrezaei@yahoo.com)
-
----
-
-## 🇬🇧 English Version
-
-### ✨ Features
-
-- **Product Management**: View name, price, description, stock – with Persian slug support.
-- **Dynamic Cart**: Add, update, remove items.
-- **Order & Payment**: Create order with shipping info and payment method.
-- **User Account**: Register, login, logout, profile with cart/order history.
-- **Fully Persian-compatible UI**.
-- **Django messages** for notifications.
-
-### 🛠 Technologies
-
-- Python 3.x  
-- Django 4.x  
+- Python 3.13.2  
+- Django 5.2.4  
 - PostgreSQL  
-- HTML, CSS, Tailwind CSS, JavaScript  
-- Fonts: Zain, Jost  
-- Libraries: `django.contrib.auth`, `django.contrib.messages`  
+- Tailwind CSS  
+- Font: Zain, Jost  
+- JavaScript, Remixicon, Swiper
 
-### ⚙️ Installation
+---
+
+## 🔑 Key Dependencies / وابستگی‌ها
+
+- `django-recaptcha==4.0.0` – محافظت با reCAPTCHA  
+- `psycopg2-binary` – اتصال PostgreSQL  
+- `requests` – برای reCAPTCHA API  
+- `django.contrib.auth` – مدیریت کاربران و نشست‌ها  
+
+> ✅ Optional: نصب django-ratelimit برای محدودسازی درخواست‌ها  
+```bash
+pip install django-ratelimit
+```
+
+---
+
+## 📦 Requirements / پیش‌نیازها
+
+- Python 3.13.2  
+- Django 5.2.4  
+- PostgreSQL  
+- virtualenv (اختیاری)
+
+---
+
+## ⚙️ Setup / نصب و اجرا
 
 ```bash
-git clone https://github.com/Sajjadhosseinrezaei/DivineBeautyShop.git
+# Clone the repository
+git clone <repository-url>
 cd DivineBeautyShop
 
+# Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
+# Install dependencies
 pip install -r requirements.txt
+```
 
+### 🔧 Configure Environment
+
+Create a `.env` or edit `settings.py`:
+```python
+RECAPTCHA_PUBLIC_KEY = 'your-site-key'
+RECAPTCHA_PRIVATE_KEY = 'your-secret-key'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your-email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your-app-password'
+DEFAULT_FROM_EMAIL = 'your-email@gmail.com'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'myproject',
+        'USER': 'myuser',
+        'PASSWORD': 'mypassword',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+```
+
+### 📂 Migrations & Run
+
+```bash
 python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic
-
 python manage.py createsuperuser  # optional
 python manage.py runserver
 ```
 
-> 📍 App will be available at `http://127.0.0.1:8000`
+> Project runs at: `http://127.0.0.1:8000`
 
-### 🗂 Structure
+---
+
+## 🔗 URLs / مسیرهای مهم
+
+- `/accounts/register/` : ثبت‌نام  
+- `/accounts/login/` : ورود  
+- `/accounts/logout/` : خروج  
+- `/accounts/profile/` : پروفایل  
+- `/cart/` : سبد خرید  
+- `/order/create/` : ثبت سفارش  
+- `/products/<id>/` : جزئیات محصول  
+- `/` : صفحه اصلی  
+
+---
+
+## 🗂 Project Structure
 
 ```
 DivineBeautyShop/
 ├── accounts/
-├── orders/
-├── products/
-├── templates/
-├── static/
+│   ├── models.py ← CustomUser
+│   ├── views.py ← Register, Login, Logout, Verify
+│   └── urls.py
+├── orders/ ← Cart, Orders
+├── products/ ← Product model & views
+├── templates/accounts/html/ ← HTML Templates
+├── static/ ← css/, js/, img/
 ```
 
-### 🌐 URLs
+---
 
-- `/`, `/list/`, `/products/<id>/`, `/cart/`, `/order/create/`, `/accounts/...`
+## 🧪 Testing
 
-### 🚀 Future
+- ثبت‌نام با داده صحیح/نادرست و تأیید ایمیل  
+- ورود با حساب تأیید شده/نشده  
+- خروج از حساب  
+- بررسی لاگ‌ها در فایل `debug.log`
 
-- Online payment  
-- Animated UI improvements  
-- Advanced filters  
-- Promo codes  
-- Better form validation  
+---
 
-### 📧 Contact
+## 🚀 Future Improvements / توسعه‌های آینده
 
-**sajjadhossein** — [sajjadhosseinrezaei@yahoo.com](mailto:sajjadhosseinrezaei@yahoo.com)
+- بازیابی رمز عبور (Password Reset)  
+- افزودن سیستم کد تخفیف و فیلتر پیشرفته  
+- بهبود فرم‌ها و انیمیشن رابط کاربری  
+- اتصال درگاه پرداخت آنلاین  
+- پیاده‌سازی کامل بخش محصولات و سبد خرید
+
+---
+
+## 📧 Contact / تماس
+
+**sajjadhossein**  
+📩 Email: [sajjadhosseinrezaei@yahoo.com](mailto:sajjadhosseinrezaei@yahoo.com)

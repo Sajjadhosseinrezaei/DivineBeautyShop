@@ -1,14 +1,147 @@
-{% extends "index.html" %}
 {% load static %}
+<!doctype html>
+<html>
 
-{% block content %}
-<section class="bg-white text-gray-600">
-    <div class="container flex flex-col items-center gap-y-12">
-        <div>
-            <p class="hero__text font-Winky text-2xl">Every one need MAKE UP</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!------------------------ favicon ------------------------------------->
+    <link rel="shortcut icon" href="img/divine-logo.png" type="image/x-icon">
+    <!-- css -->
+    <link href="{% static "css/output.css" %}" rel="stylesheet">
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.min.css">
+    <!-- swiper-->
+    <link rel="stylesheet" href={% static 'css/swiper-bundle.min.css' %}>
+
+    <!-- title -->
+    <title>Divine Beauty</title>
+</head>
+
+<body>
+
+    {% comment %} <!------------------------------------ Header ---------------------------------------------> {% endcomment %}
+    <header class="bg-rose-200 py-8 lg:pt-6 lg:pb-12">
+        <div
+            class="container mx-auto lg:relative flex flex-col lg:flex-row lg:justify-between gap-y-4 lg:gap-y-0 relative">
+
+            {% comment %} <!-- hamburger / sm-nav /start--> {% endcomment %}
+            <div
+                class="snav__close-btn absolute top-6 right-6 lg:static text-xl sm:text-2xl cursor-pointer z-40 text-gray-400 lg:hidden transition-all">
+                <i class="snav__close-btn-icon ri-menu-4-line" id="hamburger"></i>
+            </div>
+            {% comment %} <!-- hamburger / sm-nav /finished--> {% endcomment %}
+
+            {% comment %} <!-- Logo --> {% endcomment %}
+            <div class="flex justify-center lg:justify-normal">
+                <a href="#">
+                    <img src="{% static 'img/divine-logo.png' %}" alt="" class="w-16 h-16">
+                </a>
+            </div>
+
+            <div class="flex flex-col gap-y-4 lg:flex-row lg:gap-x-10 lg:gap-y-0">
+
+                {% comment %} <!-- location --> {% endcomment %}
+                <div class="flex justify-center items-center lg:justify-normal gap-x-2">
+                    <i class="ri-map-pin-2-fill text-2xl text-gray-400"></i>
+                    <div>خیابان حافظ کوچه 23</div>
+                </div>
+
+                {% comment %} <!-- phone --> {% endcomment %}
+                <div class="flex justify-center items-center lg:justify-normal gap-x-2">
+                    <i class="ri-phone-fill text-2xl text-gray-400"></i>
+                    <div>(+98) 990 3972 200</div>
+                </div>
+
+                {% comment %} <!-- btn --> {% endcomment %}
+                <button class="btn btn-sm w-60 lg:w-auto mx-auto lg:mx-0">رزرو</button>
+
+                {% comment %} <!-- sm nav ///? --> {% endcomment %}
+                <nav
+                    class="snav bg-white fixed w-[300px] h-screen shadow-2xl lg:hidden transition-all duration-300 z-30 top-0 -right-[300px] ">
+                    {% comment %} <!-- nav tigger btn /look at front--> {% endcomment %}
+
+                    <div class="flex flex-col items-center gap-y-10 px-12 h-full">
+                        {% comment %} <!-- logo --> {% endcomment %}
+                        <div class="pt-20">
+                            <a href="#">
+                                <img src={% static 'img/divine-logo.png' %} alt="" class="w-16 h-16">
+                            </a>
+                        </div>
+                        {% comment %} <!-- list --> {% endcomment %}
+                        <ul class="text-gray-400 flex flex-col items-center gap-y-5">
+                            <li><a href="{% url "home:home" %}" class="transition-all duration-300 hover:text-rose-200">فروشگاه</a></li>
+                            <li><a href="{% url "products:product_list" %}" class="transition-all duration-300 hover:text-rose-200">محصولات</a></li>
+                            <li><a href="{% url "orders:cart" %}" class="transition-all duration-300 hover:text-rose-200">سبدخرید</a></li>
+                                {% if user.is_authenticated %}
+                                <li><a href="{% url "accounts:profile" %}" class="transition-all duration-300 hover:text-rose-200">پروفایل</a></li>
+                                    <li>
+                                        <form method="post" action="{% url 'accounts:logout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="transition-all duration-300 hover:text-rose-200">خروج</button>
+                                        </form>
+                                    </li>
+                                {% else %}
+                                    <li><a href="{% url 'accounts:login' %}" class="transition-all duration-300 hover:text-rose-200">ورود</a></li>
+                                {% endif %}
+                        {% comment %} <!-- form --> {% endcomment %}
+                        <form class="relative flex gap-x-3" dir="rtl">
+                            <label for="snav-search-input">
+                                <i class="ri-search-line text-xl text-rose-200"></i>
+                            </label>
+                            <input type="text" id="snav-search-input" placeholder="جستجو ..." class="text-gray-400 outline-none w-[160px] border-b-2 focus:border-b-2 focus:border-rose-200 
+                            placeholder:italic">
+                        </form>
+                    </div>
+                </nav>
+
+                {% comment %} <!-- desktop nav--> {% endcomment %}
+                <nav class="bg-white/90 absolute w-full h-16 left-0 -bottom-[86px] shadow-md hover:shadow-lg rounded-[10px] hidden lg:flex lg:items-center lg:justify-between lg:px-14 transition-all duration-300 delay-75"
+                    dir="rtl">
+                    <!-- list -->
+                    <ul class="text-gray-400 flex  gap-x-4">
+                        <li><a href={% url "home:home" %}
+                                class="border-l  pl-4 transition-all duration-300 hover:text-rose-200">فروشگاه</a></li>
+                        <li><a href={% url "products:product_list" %}
+                                class="border-l  pl-4 transition-all duration-300 hover:text-rose-200">محصولات</a></li>
+                        <li><a href={% url "orders:cart" %}
+                                class="border-l  pl-4 transition-all duration-300 hover:text-rose-200">سبدخرید</a></li>
+                                {% if user.is_authenticated %}
+                                <li><a href="{% url "accounts:profile" %}" class="transition-all duration-300 hover:text-rose-200">پروفایل</a></li>
+                                    <li>
+                                        <form method="post" action="{% url 'accounts:logout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="transition-all duration-300 hover:text-rose-200">خروج</button>
+                                        </form>
+                                    </li>
+                                {% else %}
+                                    <li><a href="{% url 'accounts:login' %}" class="transition-all duration-300 hover:text-rose-200">ورود</a></li>
+                                {% endif %}
+                    </ul>
+
+                    {% comment %} <!-- form --> {% endcomment %}
+                    <form class="relative flex gap-x-3">
+                        <label for="search-input" class="flex justify-center items-center group-[]:">
+                            <i class="ri-search-line text-xl text-rose-200"></i>
+                        </label>
+                        <input type="text" id="search-input" placeholder="جستجو ..." class="text-gray-400 outline-none w-[100px] focus:w-[180px] focus:border-b-2 focus:border-rose-200 
+                        placeholder:italic placeholder:text-base transition-all duration-150">
+                    </form>
+                </nav>
+
+            </div>
         </div>
+    </header>
+    {% comment %} <!----------------------------------- Home / text-gray-600 ?! --------------------------------> {% endcomment %}
+    <section class="bg-white text-gray-600 ">
+        <div class="container flex flex-col items-center gap-y-12">
+            <div>
+                <p class="hero__text font-Winky text-2xl">Every one need MAKE UP</p>
 
-        <!-- menu of categories -->
+            </div>
+
+            {% comment %} <!-- menu of pages --> {% endcomment %}
+
         <div class="flex flex-wrap justify-center gap-6 md:flex-nowrap md:justify-between gap-x-12">
             {% for category in categories %}
             <div class="menu__card flex flex-col items-center gap-y-2">
@@ -28,30 +161,46 @@
             {% endfor %}
         </div>
 
-        <!-- main home -->
-        <div class="grid grid-cols-4 grid-rows-2 lg:gap-x-10 gap-x-4 lg:gap-y-4 gap-y-1 w-full max-w-6xl h-[80vh] pt-5">
-            <div class="main__img_1 sm:col-span-2 sm:row-span-2 col-span-4 row-span-2 flex items-center justify-center flex-col px-8 sm:p-0">
-                <img src="{% static 'img/face_home_2.jpg' %}" alt="face-image" class="w-full h-full object-cover object-top">
-                <div class="text-gray-600 font-Zain text-sm lg:text-base text-center p-2" dir="rtl">
-                    ! زیبایی، جلوه‌ای از اعتماد به نفس است؛ بدرخش همانطور که هستی
+            {% comment %} <!-- main home--> {% endcomment %}
+
+            <div
+                class="grid grid-cols-4 grid-rows-2 lg:gap-x-10 gap-x-4 lg:gap-y-4 gap-y-1 w-full max-w-6xl h-[80vh] pt-5 ">
+                {% comment %} <!-- face img--> {% endcomment %}
+                <div
+                    class="main__img_1 sm:col-span-2 sm:row-span-2 col-span-4 row-span-2 flex items-center justify-center flex-col px-8 sm:p-0">
+                    <img src= {% static 'img/face-home/face_home_2.jpg' %} alt="face-image"
+                        class="w-full h-full object-cover object-top">
+                    <div class="text-gray-600 font-Zain text-sm lg:text-base text-center p-2 " dir="rtl">
+                        ! زیبایی، جلوه‌ای از اعتماد به نفس است؛ بدرخش همانطور که هستی
+                    </div>
                 </div>
-            </div>
-            <div class="main__img_2 sm:col-span-2 sm:row-span-1 sm:flex flex-col items-center justify-center hidden">
-                <img src="{% static 'img/skin_home-1.jpg' %}" alt="makeup-image" class="w-full h-full object-cover">
-                <div class="text-gray-600 font-Zain text-sm lg:text-base text-center p-2" dir="rtl">
-                    !حس دوباره جوانی با انتخابی شایسته
+
+                {% comment %} <!-- makeup img--> {% endcomment %}
+                <div
+                    class="main__img_2 sm:col-span-2 sm:row-span-1 sm:flex flex-col items-center justify-center hidden">
+                    <img src={% static 'img/face-home/skin_home-1.jpg' %} alt="makeup-image" class="w-full h-full object-cover">
+                    <div class="text-gray-600 font-Zain text-sm lg:text-base text-center p-2" dir="rtl">
+                        !حس دوباره جوانی با انتخابی شایسته
+                    </div>
+
                 </div>
-            </div>
-            <div class="main__img_2 sm:col-span-2 sm:row-span-1 sm:flex flex-col items-center justify-center translate-y-10 hidden">
-                <img src="{% static 'img/skin_home.jpg' %}" alt="skin-image" class="w-full h-full object-cover">
-                <div class="text-gray-600 font-Zain text-sm lg:text-base text-center p-2" dir="rtl">
-                    پوستی شاداب، راز درخشش طبیعی.
+
+                {% comment %} <!-- skin img--> {% endcomment %}
+                <div
+                    class="main__img_2 sm:col-span-2 sm:row-span-1 sm:flex flex-col items-center justify-center translate-y-10 hidden">
+                    <img src={% static 'img/face-home/skin_home.jpg' %} alt="skin-image" class="w-full h-full object-cover">
+                    <div class="text-gray-600 font-Zain text-sm lg:text-base text-center p-2" dir="rtl">
+                        پوستی شاداب، راز درخشش طبیعی.
+                    </div>
+
                 </div>
+
             </div>
-        </div>
+
     </section>
 
-    <!-- review - most popular products -->
+    {% comment %} <!------------------------ review - most popular products -------------------------------------> {% endcomment %}
+
     <section id="review" class="container relative overflow-hidden mb-20 md:mb-28 text-gray-400 sm:mt-10">
         <div class="flex flex-col items-center gap-3 text-center mb-10 md:mb-20">
             <h2 class="about__title md:text-xl text-lg font-bold">پرفروش‌ترین محصولات</h2>
@@ -98,4 +247,136 @@
             </div>
         </div>
     </section>
-{% endblock content %}
+
+    {% comment %} <!------------------------ footer -------------------------------------> {% endcomment %}
+
+
+    <footer class="footer__all bg-rose-100 text-gray-400 pt-40 pb-10 md:pt-28 relative">
+        {% comment %} <!--------- newsletter -----------> {% endcomment %}
+        <div class="container absolute top-0 right-0 left-0 -translate-y-1/2 mt-10" dir="rtl">
+            <div class="bg-white/90 px-8 pt-3 pb-8 space-y-3 rounded-md ">
+                <h3>
+                    <span class="text-yellow-500">از جدیدترین محصولات ما مطلع شوید</span>
+
+                </h3>
+
+                <div class="flex flex-col md:flex-row gap-1">
+                    <input type="email" placeholder="ایمیل ..."
+                        class="bg-rose-100 rounded-md w-full px-5 py-3 text-gray-400 outline-none">
+                    <button
+                        class="flex items-center justify-center gap-1 bg-white text-yellow-500 px-5 py-3 rounded-md border-2 border-gray-400 hover:opacity-80 hover:text-white hover:bg-gray-400 duration-300 delay-100">
+                        <span>ثبت</span>
+                        <i class="ri-send-plane-2-fill rotate-180"></i>
+
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% comment %} <!--------- social icon -----------> {% endcomment %}
+        <div class="footer__text container mt-16 mb-10">
+            <div class=" border-b border-yellow-500 relative">
+                <div class=" absolute transform -translate-y-1/2 top-0 left-0 right-0 max-w-36 mx-auto ">
+                    <div class="bg-rose-100 text-lg text-center space-x-2">
+                        <i class="ri-facebook-fill hover:text-yellow-500 duration-300 cursor-pointer"></i>
+                        <i class="ri-twitter-x-line hover:text-yellow-500 duration-300 cursor-pointer text-base"></i>
+                        <i class="ri-instagram-line hover:text-yellow-500 duration-300 cursor-pointer "></i>
+                        <i class="ri-linkedin-fill hover:text-yellow-500 duration-300 cursor-pointer"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} <!--------- content -----------> {% endcomment %}
+        <div class="footer__text container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 text-center md:text-start "
+            dir="rtl">
+            <!--item 1-->
+            <div>
+                <div class="text-6xl text-yellow-500 text-center inline-block ">
+                    <!--<i class="ri-leaf-fill"></i>-->
+                    <i class="ri-bluesky-line"></i>
+                    <p class="font-Winky text-xl sm:text-2xl">زیبایی الهی
+                    </p>
+                </div>
+            </div>
+            <!--item 2-->
+            <div>
+                <p class="mb-5 font-bold text-xl ">دسترسی سریع</p>
+                <div class="flex flex-col gap-1">
+                    <a href={% url "home:home" %}>فروشگاه</a>
+                    <a href={% url "products:product_list" %}>محصولات</a>
+                    <a href="orders:cart">سبدخرید</a>
+                    <a href="#">محبوب ها</a>
+                </div>
+            </div>
+
+            <!--item 3-->
+            <div>
+                <p class="mb-5 font-bold text-xl ">سرویس خدمات</p>
+                <div class="flex flex-col gap-1">
+                    <a href="#">حمل و نقل</a>
+                    <a href="#">سفارش حضوری</a>
+                    <a href="#">پیشنهادات</a>
+                    <a href="#">مشاوره رایگان</a>
+                </div>
+            </div>
+
+            <!--item 4-->
+            <div>
+                <p class="mb-5 font-bold text-xl ">ارتباط با ما</p>
+                <div class="flex flex-col gap-1 font-Winky">
+                    <a href="#+989903972200">2200 397 0990</a>
+                    <a href="#lightcodecamp@gmail.com">marziehfeyz7@gmail.com</a>
+                    <br>
+                    <p class="font-Zain">خیابان حافظ کوچه 23</p>
+
+                </div>
+            </div>
+
+        </div>
+
+        {% comment %} <!--------- copyright -----------> {% endcomment %}
+        <div class="copy__right container">
+            <p class="text-center mt-10 opacity-50">Copyright &copy; 2025. marziehfeyz7.</p>
+
+        </div>
+
+        {% comment %} <!--------- floral image -----------> {% endcomment %}
+        <div class="footer__floral left-0 bottom-0 absolute opacity-20 pointer-events-none ">
+            <img src={% static "img/footer/floral-1.png" %}  alt="floral_image" class="w-full lg:w-1/2">
+        </div>
+
+
+    </footer>
+
+
+
+    {% comment %} <!-- //////////////////////////////////////////////////////////////// --> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- SCRIPTS-->
+    <!--swiper-->
+    <script src={% static "js/swiper-bundle.min.js" %}></script>
+
+    <!-- scroll -->
+    <script src={% static "js/scrollreveal.min.js" %}></script>
+    <!-- main js-->
+    <script src={% static 'js/main.js' %}></script>
+</body>
+
+</html>

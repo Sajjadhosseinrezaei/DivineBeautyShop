@@ -40,7 +40,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200, verbose_name="نام محصول")
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True, verbose_name="اسلاگ")
     description = models.TextField(blank=True, verbose_name="توضیحات")
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="قیمت")
+    price = models.DecimalField(max_digits=10, decimal_places=0, verbose_name="قیمت")
     stock = models.PositiveIntegerField(default=0, verbose_name="موجودی")
     is_available = models.BooleanField(default=True, verbose_name="در دسترس")
     is_featured = models.BooleanField(default=False, verbose_name="ویژه")

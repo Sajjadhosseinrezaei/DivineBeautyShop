@@ -86,12 +86,7 @@ Create a `.env` or edit `settings.py`:
 RECAPTCHA_PUBLIC_KEY = 'your-site-key'
 RECAPTCHA_PRIVATE_KEY = 'your-secret-key'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your-email@gmail.com'
-EMAIL_HOST_PASSWORD = 'your-app-password'
-DEFAULT_FROM_EMAIL = 'your-email@gmail.com'
+
 
 DATABASES = {
     'default': {
@@ -110,8 +105,7 @@ DATABASES = {
 ```bash
 python manage.py makemigrations
 python manage.py migrate
-python manage.py collectstatic
-python manage.py createsuperuser  # optional
+python manage.py createsuperuser 
 python manage.py runserver
 ```
 

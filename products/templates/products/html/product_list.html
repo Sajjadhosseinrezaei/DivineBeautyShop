@@ -1,14 +1,114 @@
-{% extends "index.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<section class="text-gray-400">
-    <!--blob 2-->
-    <div class="w-64 h-64 bg-rose-500 rounded-full blur-3xl -z-10 opacity-40 absolute bottom-0 left-0"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!------------------------ favicon ------------------------------------->
+    <link rel="shortcut icon" href="img/divine-logo.png" type="image/x-icon">
+    <!-- css -->
+    <link href="{% static "css/output.css" %}" rel="stylesheet">
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.min.css">
+    <!-- swiper-->
+    <link rel="stylesheet" href={% static 'css/swiper-bundle.min.css' %}>
 
-    <div class="about__leaf absolute top-28 -right-12 opacity-50">
-        <img src="" alt="leaf-image" class="w-40 md:w-48 xl:w-52">
-    </div>
+    <!-- title -->
+    <title>Divine Beauty</title>
+</head>
 
+<body>
+
+    <div class="text-gray-400 " dir="rtl">
+        {% comment %} <!--blob 1--> {% endcomment %}
+        <div class="w-64 h-64 bg-rose-700 rounded-full blur-3xl -z-10 
+        opacity-30 absolute right-0 top-2 transform -translate-x-1/2 -translate-y-1/2">
+        </div>
+
+        {% comment %} <!-- navbar and header --> {% endcomment %}
+        <div class="flex flex-row justify-between relative py-8 px-12 sm:px-14 border-b-2 border-b-rose-200">
+            <div class="flex flex-row items-center gap-10">
+
+
+                <div class="flex flex-row items-center gap-3">
+                    <a href="#"><img src={{ category.image.url }} alt=""
+                            class="w-16 h-16 rounded-full transition-transform duration-300 ease-out hover:scale-110 hover:opacity-95">
+                    </a>
+                    <p class="hover:opacity-95 text-lg text-yellow-500">{{ category.name }}</p>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+            <div class="flex flex-row-reverse items-center gap-3 z-50 text-2xl sm:text-3xl text-left">
+                <a href={% url "home:home" %}><i
+                        class="ri-arrow-left-s-line text-yellow-500 duration-300 cursor-pointer"></i></a>
+
+                <a href="#">
+                    <img src={% static 'img/divine-logo.png' %} alt="" class="w-16 h-16">
+                </a>
+            </div>
+
+
+        </div>
+
+        {% comment %} ---------------------- main - products --------------------------------- {% endcomment %}
+
+
+
+
+        {% comment %} <!-- leaf {% endcomment %}
+            <div class="about__leaf top-28 -right-12 opacity-50">
+                <img src={% static 'img/eye/leaf-3.png' %} alt="leaf-iamge" class="w-40 md:w-48 xl:w-52">
+
+            </div>
+
+
+
+
+
+        <div class="text-gray-400">
+            <!--blob 2-->
+            <div class="w-64 h-64 bg-rose-500 rounded-full blur-3xl -z-10 
+            opacity-40 absolute bottom-0 left-0">
+            </div>
+
+            <!-- فیلتر دسته‌بندی -->
+            <div class=" w-full mt-4 px-4 sm:px-6 md:px-0 mr-32" dir="rtl">
+                <div class="flex flex-col items-start gap-4 w-full ">
+                    <h2 class="text-yellow-500 text-lg sm:text-xl font-bold">دسته‌بندی محصولات</h2>
+
+                    <!-- دسته اصلی -->
+                    <div class="relative w-auto">
+                        <select id="subCategory"
+                            class="w-auto rounded-md bg-white border-2 border-gray-400 px-4 py-2 text-sm sm:text-base text-yellow-500 focus:outline-none focus:ring-0 focus:border-transparent ">
+                            <option value="all">همه زیر دسته‌ها</option>
+
+                            {% if children %}
+                                {% for child in children %}
+                                    <option value="{{ child.id }}">{{ child.name }}</option>
+                                {% endfor %}
+                            {% else %}
+                                <option disabled>هیچ زیر دسته‌ای وجود ندارد</option>
+                            {% endif %}
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- leaf -->
+            <div class="about__leaf absolute top-28 -left-16 opacity-50">
+                <img src={% static 'img/eye/leaf-3.png' %} alt="leaf-iamge" class="w-40 md:w-48 xl:w-52 transform scale-x-[-1]">
+
+            </div>
     <div class="container flex flex-col items-center gap-y-12">
         <!-- motto -->
         <div>
@@ -47,36 +147,181 @@
         </div>
     </div>
 
-    <!-- Pagination -->
-    {% if is_paginated %}
-    <div class="flex justify-center mb-14 space-x-2 text-gray-400 rtl:space-x-2" dir="ltr">
-        {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}"
-           class="px-3 py-1 rounded border text-yellow-500 border-gray-400 hover:text-white hover:bg-gray-400 duration-300 delay-100 transition-all">قبلی</a>
-        {% else %}
-        <button class="px-3 py-1 rounded border text-gray-500 border-gray-400 cursor-not-allowed" disabled>قبلی</button>
-        {% endif %}
+            <!-- این خط پایان grid محصولاتته -->
+            <!-- Pagination -->
+                {% if is_paginated %}
+                <div class="flex justify-center mb-14 space-x-2 text-gray-400 rtl:space-x-2" dir="ltr">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}"
+                    class="px-3 py-1 rounded border text-yellow-500 border-gray-400 hover:text-white hover:bg-gray-400 duration-300 delay-100 transition-all">قبلی</a>
+                    {% else %}
+                    <button class="px-3 py-1 rounded border text-gray-500 border-gray-400 cursor-not-allowed" disabled>قبلی</button>
+                    {% endif %}
 
-        {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-        <button class="px-3 py-1 rounded border text-white bg-gray-400 border-gray-400">{{ num }}</button>
-        {% else %}
-        <a href="?page={{ num }}"
-           class="px-3 py-1 rounded border text-yellow-500 border-gray-400 hover:text-white hover:bg-gray-400 duration-300 delay-100 transition-all">{{ num }}</a>
-        {% endif %}
-        {% endfor %}
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <button class="px-3 py-1 rounded border text-white bg-gray-400 border-gray-400">{{ num }}</button>
+                    {% else %}
+                    <a href="?page={{ num }}"
+                    class="px-3 py-1 rounded border text-yellow-500 border-gray-400 hover:text-white hover:bg-gray-400 duration-300 delay-100 transition-all">{{ num }}</a>
+                    {% endif %}
+                    {% endfor %}
 
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}"
-           class="px-3 py-1 rounded border text-yellow-500 border-gray-400 hover:text-white hover:bg-gray-400 duration-300 delay-100 transition-all">بعدی</a>
-        {% else %}
-        <button class="px-3 py-1 rounded border text-gray-500 border-gray-400 cursor-not-allowed" disabled>بعدی</button>
-        {% endif %}
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}"
+                    class="px-3 py-1 rounded border text-yellow-500 border-gray-400 hover:text-white hover:bg-gray-400 duration-300 delay-100 transition-all">بعدی</a>
+                    {% else %}
+                    <button class="px-3 py-1 rounded border text-gray-500 border-gray-400 cursor-not-allowed" disabled>بعدی</button>
+                    {% endif %}
+                </div>
+                {% endif %}
+        </div>
+        <div class="about__leaf absolute -bottom-44 -right-20 opacity-50">
+            <img src={% static 'img/eye/leaf-3.png' %} alt="leaf-iamge" class="w-40 md:w-48 xl:w-52">
+
+        </div>
     </div>
-    {% endif %}
 
-    <div class="about__leaf absolute -bottom-44 -left-20 opacity-50">
-        <img src="" alt="leaf-image" class="w-40 md:w-48 xl:w-52">
+    {% comment %} <!------------------------ footer -------------------------------------> {% endcomment %}
+    <footer class="footer__all bg-rose-100 text-gray-400 pt-40 pb-10 md:pt-28 relative">
+        {% comment %} <!--------- newsletter -----------> {% endcomment %}
+        <div class="container absolute top-0 right-0 left-0 -translate-y-1/2 mt-10" dir="rtl">
+            <div class="bg-white/90 px-8 pt-3 pb-8 space-y-3 rounded-md ">
+                <h3>
+                    <span class="text-yellow-500">از جدیدترین محصولات ما مطلع شوید</span>
+
+                </h3>
+
+                <div class="flex flex-col md:flex-row gap-1">
+                    <input type="email" placeholder="ایمیل ..."
+                        class="bg-rose-100 rounded-md w-full px-5 py-3 text-gray-400 outline-none">
+                    <button
+                        class="flex items-center justify-center gap-1 bg-white text-yellow-500 px-5 py-3 rounded-md border-2 border-gray-400 hover:opacity-80 hover:text-white hover:bg-gray-400 duration-300 delay-100">
+                        <span>ثبت</span>
+                        <i class="ri-send-plane-2-fill rotate-180"></i>
+
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% comment %} <!--------- social icon -----------> {% endcomment %}
+        <div class="footer__text container mt-16 mb-10">
+            <div class=" border-b border-yellow-500 relative">
+                <div class=" absolute transform -translate-y-1/2 top-0 left-0 right-0 max-w-36 mx-auto ">
+                    <div class="bg-rose-100 text-lg text-center space-x-2">
+                        <i class="ri-facebook-fill hover:text-yellow-500 duration-300 cursor-pointer"></i>
+                        <i class="ri-twitter-x-line hover:text-yellow-500 duration-300 cursor-pointer text-base"></i>
+                        <i class="ri-instagram-line hover:text-yellow-500 duration-300 cursor-pointer "></i>
+                        <i class="ri-linkedin-fill hover:text-yellow-500 duration-300 cursor-pointer"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} <!--------- content -----------> {% endcomment %}
+        <div class="footer__text container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 text-center md:text-start "
+            dir="rtl">
+            <!--item 1-->
+            <div>
+                <div class="text-6xl text-yellow-500 text-center inline-block ">
+                    <!--<i class="ri-leaf-fill"></i>-->
+                    <i class="ri-bluesky-line"></i>
+                    <p class="font-Winky text-xl sm:text-2xl">زیبایی الهی
+                    </p>
+                </div>
+            </div>
+            <!--item 2-->
+            <div>
+                <p class="mb-5 font-bold text-xl ">دسترسی سریع</p>
+                <div class="flex flex-col gap-1">
+                    <a href={% url "home:home" %}>فروشگاه</a>
+                    <a href={% url "products:product_list" %}>محصولات</a>
+                    <a href="orders:cart">سبدخرید</a>
+                    <a href="#">محبوب ها</a>
+                </div>
+            </div>
+
+            <!--item 3-->
+            <div>
+                <p class="mb-5 font-bold text-xl ">سرویس خدمات</p>
+                <div class="flex flex-col gap-1">
+                    <a href="#">حمل و نقل</a>
+                    <a href="#">سفارش حضوری</a>
+                    <a href="#">پیشنهادات</a>
+                    <a href="#">مشاوره رایگان</a>
+                </div>
+            </div>
+
+            <!--item 4-->
+            <div>
+                <p class="mb-5 font-bold text-xl ">ارتباط با ما</p>
+                <div class="flex flex-col gap-1 font-Winky">
+                    <a href="#+989903972200">2200 397 0990</a>
+                    <a href="#lightcodecamp@gmail.com">marziehfeyz7@gmail.com</a>
+                    <br>
+                    <p class="font-Zain">خیابان حافظ کوچه 23</p>
+
+                </div>
+            </div>
+
+        </div>
+
+        {% comment %} <!--------- copyright -----------> {% endcomment %}
+        <div class="copy__right container">
+            <p class="text-center mt-10 opacity-50">Copyright &copy; 2025. marziehfeyz7.</p>
+
+        </div>
+
+        {% comment %} <!--------- floral image -----------> {% endcomment %}
+        <div class="footer__floral left-0 bottom-0 absolute opacity-20 pointer-events-none ">
+            <img src={% static "img/footer/floral-1.png" %}  alt="floral_image" class="w-full lg:w-1/2">
+        </div>
+
+
+    </footer>
+
     </div>
-</section>
-{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="../js/scrollreveal.min.js"></script>
+    <!-- main js-->
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

@@ -7,6 +7,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 
+from django.views.generic import ListView
+from django.shortcuts import get_object_or_404
+from products.models import Product, Category
+
 class ProductListView(ListView):
     model = Product
     template_name = 'products/html/product_list.html'
@@ -16,20 +20,31 @@ class ProductListView(ListView):
     def get_queryset(self):
         qs = Product.objects.filter(is_available=True).order_by('-created_at')
         category_id = self.kwargs.get('id')
+        sub_id = self.request.GET.get('sub')  # ← زیر دسته از query param
+
         if category_id:
-            qs = qs.filter(category__id=category_id)
-        # اگر رابطه‌ی ForeignKey با category است، select_related کمک می‌کند تعداد کوئری‌ها را کم کند:
+            try:
+                category = Category.objects.get(id=category_id)
+
+                if sub_id and sub_id != "all":
+                    # فقط زیر دسته انتخاب شده
+                    qs = qs.filter(category__id=sub_id)
+                else:
+                    # همه محصولات دسته والد و زیر دسته‌ها
+                    descendant_ids = category.get_descendants(include_self=True).values_list('id', flat=True)
+                    qs = qs.filter(category__id__in=descendant_ids)
+            except Category.DoesNotExist:
+                pass
+
         return qs.select_related('category')
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category_id = self.kwargs.get('id')
         if category_id:
-            # اگر بخواهید صفحه 404 در صورت نبود دسته نمایش داده شود:
-            # context['category'] = get_object_or_404(Category, id=category_id)
-            # یا اگر نخواهید 404 شود و فقط None بگذارید:
             try:
-                category = get_object_or_404(Category, id=category_id)
+                category = Category.objects.get(id=category_id)
                 context['category'] = category
                 context['children'] = category.get_children()
             except Category.DoesNotExist:
@@ -43,6 +58,7 @@ class ProductListView(ListView):
             .order_by('-created_at')[:4]
         )
         return context
+
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):

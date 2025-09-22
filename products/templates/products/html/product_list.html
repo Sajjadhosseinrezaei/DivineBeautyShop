@@ -32,9 +32,11 @@
 
 
                 <div class="flex flex-row items-center gap-3">
+                    {% if category.image %}
                     <a href="#"><img src={{ category.image.url }} alt=""
                             class="w-16 h-16 rounded-full transition-transform duration-300 ease-out hover:scale-110 hover:opacity-95">
                     </a>
+                    {% endif%}
                     <p class="hover:opacity-95 text-lg text-yellow-500">{{ category.name }}</p>
                 </div>
 
@@ -316,6 +318,25 @@
 
 
 
+    <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const subCategorySelect = document.getElementById("subCategory");
+
+                if(subCategorySelect) {
+                    subCategorySelect.addEventListener("change", function() {
+                        const subId = this.value;
+
+                        // اگر "all" انتخاب شد، به دسته والد برگرد
+                        let url = window.location.pathname;
+                        if(subId !== "all") {
+                            url += `?sub=${subId}`;
+                        }
+
+                        window.location.href = url;
+                    });
+                }
+            });
+</script>
 
 
 

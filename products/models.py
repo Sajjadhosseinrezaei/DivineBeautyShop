@@ -7,19 +7,27 @@ from mptt.models import MPTTModel, TreeForeignKey
 class Category(MPTTModel):
     name = models.CharField(max_length=200, unique=True, verbose_name="نام دسته‌بندی")
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True, verbose_name="اسلاگ")
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children', verbose_name="دسته‌بندی والد")
+    parent = TreeForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='children',
+        verbose_name="دسته‌بندی والد"
+    )
     is_active = models.BooleanField(default=True, verbose_name="فعال")
     image = models.ImageField(upload_to='categories/%Y/%m/%d/', blank=True, null=True, verbose_name="تصویر دسته‌بندی")
+    display_order = models.PositiveIntegerField(default=0, verbose_name="ترتیب نمایش")  # ← اضافه شد
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="تاریخ به‌روزرسانی")
 
     class Meta:
         verbose_name = "دسته‌بندی"
         verbose_name_plural = "دسته‌بندی‌ها"
-        ordering = ['name']
+        ordering = ['display_order', 'name']   # ← اولویت نمایش بر اساس display_order
 
     class MPTTMeta:
-        order_insertion_by = ['name']
+        order_insertion_by = ['display_order']  # ← ترتیب در درخت هم بر اساس display_order
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -34,6 +42,7 @@ class Category(MPTTModel):
 
     def __str__(self):
         return self.name
+
 
 
 class Product(models.Model):

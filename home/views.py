@@ -10,7 +10,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        categories = Category.objects.filter(is_active=True, parent__isnull=True)
+        categories = Category.objects.filter(is_active=True, parent__isnull=True).order_by("display_order")
         context['categories'] = categories
         context['bestsellers'] = Product.objects.filter(is_available=True).annotate(
             total_sold=Sum('orderitem__quantity')

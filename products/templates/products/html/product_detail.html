@@ -1,7 +1,24 @@
-{% extends "index.html" %}
 {% load static %}
+<!doctype html>
+<html>
 
-{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!------------------------ favicon ------------------------------------->
+    <link rel="shortcut icon" href="img/divine-logo.png" type="image/x-icon">
+    <!-- css -->
+    <link href="{% static "css/output.css" %}" rel="stylesheet">
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.min.css">
+    <!-- swiper-->
+    <link rel="stylesheet" href={% static 'css/swiper-bundle.min.css' %}>
+
+    <!-- title -->
+    <title>Divine Beauty</title>
+</head>
+
+<body>
 <div class="text-gray-400 bg-white" dir="rtl">
     <!-- نمایش پیام‌ها -->
     {% if messages %}
@@ -92,9 +109,12 @@
     </div>
 </div>
 
+
+    <!--------- copyright ----------->
 <div class="copy__right container">
     <p class="text-center mt-10 opacity-50 text-gray-400">Copyright &copy; 2025. marziehfeyz7.</p>
 </div>
+
 
 <script>
     let count = 1;
@@ -118,4 +138,11 @@
         }
     }
 </script>
-{% endblock content %}
+
+    <!--swiper-->
+    <script src="js/swiper-bundle.min.js"></script>
+    <!-- main js-->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
